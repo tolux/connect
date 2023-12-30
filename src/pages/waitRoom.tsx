@@ -7,6 +7,8 @@ import avatar4 from '../assets/testimg/avatar4.png';
 import avatar5 from '../assets/testimg/avatar5.png';
 import { AudioSvg, CameraSvg } from '@/assets/icons';
 import IconBtn from '@/components/layout/element/iconBtn';
+import { Link } from 'react-router-dom';
+import { MEET_ROOM_URL } from '@/data';
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
@@ -48,9 +50,11 @@ export default function WaitRoom() {
           <IconBtn Icon={<CameraSvg className=" w-8" />} />
         </div>
         <div className="mt-6 text-center ">
-          <button className=" bg-BLUE_01 text-white p-3 hover:bg-BLUE_01/90 rounded-md ">
-            Join Meeting
-          </button>
+          <Link to={MEET_ROOM_URL}>
+            <button className=" bg-BLUE_01 text-white p-3 hover:bg-BLUE_01/90 rounded-md ">
+              Join Meeting
+            </button>
+          </Link>
         </div>
       </div>
     </section>
