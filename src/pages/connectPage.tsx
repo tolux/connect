@@ -1,35 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import MeetingRoom from './meetingRoom';
 import WaitRoom from './waitRoom';
 import { useRouting } from '@/hooks/routing';
-import { io } from 'socket.io-client';
-import { SOCKET_URL } from '@/data';
+
+import { AppContextApi, AppContextData } from '@/context';
 
 export default function ConnectPage() {
   const { param } = useRouting();
-  const [userCount, setUserCount] = useState(0);
+
+  const { socket, userName } = useContext(AppContextData);
+  const { setAppData } = useContext(AppContextApi);
+
+  function send() {
+    socket.emit('onMessaging', { message: 'tolu' });
+  }
+  function setUser() {
+    const dateNum = +Date.now() + '';
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      localStorage.setItem('userId', dateNum);
+    }
+
+    setAppData('userName', userId || dateNum);
+  }
 
   function updateUserCount(userCount: number) {
-    setUserCount(userCount);
+    setAppData('userCount', userCount);
   }
 
   useEffect(() => {
-    const socket = io(SOCKET_URL, {
-      transports: ['websocket'],
+    setUser();
+    socket.connect();
+    socket.emit('joinRoom', {
+      roomNum: 45,
+      userId: userName,
     });
-    socket.emit('joinRoom', 45);
     socket.on('userCount', updateUserCount);
-
     return () => {
       socket.off('userCount', updateUserCount);
       socket.disconnect();
     };
   }, []);
-
   const display = {
-    wait: <WaitRoom userCount={userCount} />,
+    wait: <WaitRoom />,
     meeting: <MeetingRoom />,
   }[param || 'wait'];
 
-  return <div className="h-full">{display}</div>;
+  return (
+    <div className="h-full">
+      <button onClick={send}>send</button>
+      {display}
+    </div>
+  );
 }

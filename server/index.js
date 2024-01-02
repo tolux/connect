@@ -25,23 +25,31 @@ const IO = new Server(server, {
   },
 });
 
-const users = new Set();
+const users = new Map();
+const messages = [];
 
 IO.on('connection', function connection(socket) {
-  socket.on('joinRoom', function joinRoom(roomNum) {
+  socket.on('joinRoom', function joinRoom({ roomNum, userId }) {
+    console.log(roomNum, userId);
     socket.join(roomNum);
-    users.add(socket.id);
+    if (!users.has(userId)) {
+      users.set(userId, socket.id);
+    }
     IO.to(roomNum).emit('userCount', users.size);
 
+    socket.on('onMessaging', function onMessaging(mess) {
+      messages.push(mess);
+      console.log(mess);
+      // IO.to(roomNum).emit('sendMess', messages);
+    });
+
     socket.on('disconnect', function disconnect() {
-      users.delete(socket.id);
+      users.delete(userId);
       IO.to(roomNum).emit('userCount', users.size);
       socket.leave(roomNum);
     });
   });
 });
-
-// IO.listen(3000);
 
 server.listen(3000, function initServer() {
   console.log('server done start ooo');

@@ -4,6 +4,7 @@ import { PageLayout } from '../components/layout';
 
 import { CONNECT_ROOM_URL } from '@/data';
 import ConnectPage from '@/pages/connectPage';
+import { AppProvider } from '@/context';
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,11 @@ export const router = createBrowserRouter([
       },
       {
         path: CONNECT_ROOM_URL,
-        element: <ConnectPage />,
+        element: (
+          <AppProvider>
+            <ConnectPage />,
+          </AppProvider>
+        ),
       },
     ],
   },

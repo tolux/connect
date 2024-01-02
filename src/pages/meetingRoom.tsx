@@ -6,16 +6,24 @@ import {
   UsersSvg,
   WindowSvg,
 } from '@/assets/icons';
+import ChartSection from '@/components/chartSection';
 import MediaIcon from '@/components/element/mediaIcon';
+import { AppContextData } from '@/context';
+import { useContext, useEffect } from 'react';
 
 export default function MeetingRoom() {
+  const { userCount } = useContext(AppContextData);
+  useEffect(() => {
+    console.log('from meeting');
+  }, []);
   return (
-    <section className="h-full p-3 ">
+    <section className="h-full p-3 overflow-hidden relative ">
+      <ChartSection />
       <div className=" bg-BLACK_0 h-full rounded-2xl flex items-start border-2 shadow-md p-3 border-GRAY_02">
         <div className=" flex-1 relative h-full">
           <div className="inline-block">
             <div className="  border-2 px-5 py-1 border-GRAY_01 rounded-3xl flex items-center space-x-3">
-              <UsersSvg className=" w-4 h-4" /> <span>32</span>
+              <UsersSvg className=" w-4 h-4" /> <span>{userCount}</span>
             </div>
           </div>
           <div className="mt-8 ">

@@ -1,4 +1,3 @@
-import { TWaitRoom } from '@/@types/app.types';
 import avatar1 from '../assets/testimg/avatar1.png';
 import avatar2 from '../assets/testimg/avatar2.png';
 import avatar3 from '../assets/testimg/avatar3.png';
@@ -8,11 +7,14 @@ import { AudioSvg, CameraSvg } from '@/assets/icons';
 import IconBtn from '@/components/element/iconBtn';
 
 import { useRouting } from '@/hooks/routing';
+import { useContext } from 'react';
+import { AppContextData } from '@/context';
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
-export default function WaitRoom({ userCount }: TWaitRoom) {
+export default function WaitRoom() {
   const { switchUrl } = useRouting();
+  const { userCount } = useContext(AppContextData);
 
   return (
     <section className=" bg-">

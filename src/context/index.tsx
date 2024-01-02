@@ -1,20 +1,69 @@
-import { TChildrenProp } from '@/@types/app.types';
-import { createContext } from 'react';
-import io from 'socket.io-client';
+import {
+  TChildrenProp,
+  TAppProvider,
+  TReducerAction,
+  TAppProviderApi,
+} from '@/@types/app.types';
+import { SOCKET_URL } from '@/data';
 
-const URL =
-  process.env.NODE_ENV == 'production'
-    ? window.location
-    : 'http://localhost:3000';
+import { createContext, useEffect, useMemo, useReducer } from 'react';
+import { io } from 'socket.io-client';
 
-const socketIO = io(URL, {
+const socketIo = io(SOCKET_URL, {
   transports: ['websocket'],
 });
+const initialDataState = {
+  userName: '',
+  socket: socketIo,
+  userCount: 0,
+};
 
-export const SocketContext = createContext(socketIO);
+const initialApiState = {
+  setAppData: () => {},
+};
 
-export function SocketProvider({ children }: TChildrenProp) {
+function reducer(state: TAppProvider, action: TReducerAction): TAppProvider {
+  if (action.type) {
+    return {
+      ...state,
+      [action.type]: action.payload,
+    };
+  }
+  return state;
+}
+
+export const AppContextData = createContext<TAppProvider>(initialDataState);
+export const AppContextApi = createContext<TAppProviderApi>(initialApiState);
+
+export const AppContext = createContext<TAppProvider>(initialDataState);
+
+export function AppProvider({ children }: TChildrenProp) {
+  const [appState, dispatch] = useReducer(reducer, initialDataState);
+
+  const data = useMemo(() => {
+    return {
+      userName: appState.userName,
+      socket: socketIo,
+      userCount: appState.userCount,
+    };
+  }, [appState]);
+
+  const api = useMemo(() => {
+    return {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setAppData: (type: keyof TAppProvider, payload: any) =>
+        dispatch({ type, payload }),
+    };
+  }, []);
+
+  useEffect(() => {
+    appState.socket.connect();
+    // console.log('form parent');
+  }, []);
+
   return (
-    <SocketContext.Provider value={socketIO}>{children}</SocketContext.Provider>
+    <AppContextData.Provider value={data}>
+      <AppContextApi.Provider value={api}>{children}</AppContextApi.Provider>
+    </AppContextData.Provider>
   );
 }
