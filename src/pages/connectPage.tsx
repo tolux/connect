@@ -15,8 +15,9 @@ export default function ConnectPage() {
     socket.emit('onMessaging', { message: 'tolu' });
   }
   function setUser() {
-    const dateNum = +Date.now() + '';
     const userId = localStorage.getItem('userId');
+
+    const dateNum = +Date.now() + '';
     if (!userId) {
       localStorage.setItem('userId', dateNum);
     }
@@ -30,6 +31,7 @@ export default function ConnectPage() {
 
   useEffect(() => {
     setUser();
+
     socket.connect();
     socket.emit('joinRoom', {
       roomNum: 45,

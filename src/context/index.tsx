@@ -56,11 +56,6 @@ export function AppProvider({ children }: TChildrenProp) {
     };
   }, []);
 
-  useEffect(() => {
-    appState.socket.connect();
-    // console.log('form parent');
-  }, []);
-
   return (
     <AppContextData.Provider value={data}>
       <AppContextApi.Provider value={api}>{children}</AppContextApi.Provider>
