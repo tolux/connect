@@ -27,7 +27,7 @@ export const CameraSvg = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     aria-hidden="true"
-    className="w-6 h-6 text-gray-800 dark:text-white"
+    className="w-6 h-6"
     viewBox="0 0 20 14"
     {...props}
   >
@@ -39,7 +39,7 @@ export const UsersSvg = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     aria-hidden="true"
-    className="w-6 h-6 text-gray-800 dark:text-white"
+    className="w-6 h-6"
     viewBox="0 0 20 18"
     {...props}
   >
@@ -69,7 +69,7 @@ export const CogSvg = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     aria-hidden="true"
-    className="w-6 h-6 text-gray-800 dark:text-white"
+    className="w-6 h-6"
     viewBox="0 0 20 20"
     {...props}
   >
@@ -87,5 +87,60 @@ export const WindowSvg = (props: SVGProps<SVGSVGElement>) => (
   >
     <path d="M18 0H6a2 2 0 0 0-2 2h14v12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z" />
     <path d="M14 4H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM2 16v-6h12v6H2Z" />
+  </svg>
+);
+export const MenuSvg = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    className="w-6 h-6 "
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
+  </svg>
+);
+export const ChatSvg = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    className="w-6 h-6"
+    viewBox="0 0 20 18"
+    {...props}
+  >
+    <path d="M18 4h-2v5a4 4 0 0 1-4 4H9l-2.154 1.615c.334.248.738.383 1.154.385h3.667l3.733 2.8A1 1 0 0 0 17 17v-2h1a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z" />
+    <path d="M12 0H2a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1.6.8L8.333 11H12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z" />
+  </svg>
+);
+export const SendSvg = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    className="w-6 h-6"
+    viewBox="0 0 18 20"
+    {...props}
+  >
+    <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
+  </svg>
+);
+export const CloseSvg = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    aria-hidden="true"
+    className="w-6 h-6"
+    viewBox="0 0 14 14"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+    />
   </svg>
 );

@@ -1,26 +1,19 @@
-import { useEffect, useState } from 'react';
-import { socket } from '../services/socket';
+import { TWaitRoom } from '@/@types/app.types';
 import avatar1 from '../assets/testimg/avatar1.png';
 import avatar2 from '../assets/testimg/avatar2.png';
 import avatar3 from '../assets/testimg/avatar3.png';
 import avatar4 from '../assets/testimg/avatar4.png';
 import avatar5 from '../assets/testimg/avatar5.png';
 import { AudioSvg, CameraSvg } from '@/assets/icons';
-import IconBtn from '@/components/layout/element/iconBtn';
-import { Link } from 'react-router-dom';
-import { MEET_ROOM_URL } from '@/data';
+import IconBtn from '@/components/element/iconBtn';
+
+import { useRouting } from '@/hooks/routing';
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
-export default function WaitRoom() {
-  const [roomId, sectionId] = useState(0);
-  useEffect(() => {
-    socket.on('connect', function newConnection() {
-      sectionId(roomId + 1);
-      console.log(socket);
-    });
-    // socket.connect();
-  }, [roomId]);
+export default function WaitRoom({ userCount }: TWaitRoom) {
+  const { switchUrl } = useRouting();
+
   return (
     <section className=" bg-">
       <div className=" flex items-center justify-center space-x-5 mt-16 ">
@@ -38,7 +31,7 @@ export default function WaitRoom() {
             className="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800"
             href="#"
           >
-            +5
+            +{userCount}
           </a>
         </div>
         <p className=" text-lg capitalize font-semibold">connected</p>
@@ -50,11 +43,12 @@ export default function WaitRoom() {
           <IconBtn Icon={<CameraSvg className=" w-8" />} />
         </div>
         <div className="mt-6 text-center ">
-          <Link to={MEET_ROOM_URL}>
-            <button className=" bg-BLUE_01 text-white p-3 hover:bg-BLUE_01/90 rounded-md ">
-              Join Meeting
-            </button>
-          </Link>
+          <button
+            onClick={() => switchUrl('meeting')}
+            className=" bg-BLUE_01 text-white p-3 hover:bg-BLUE_01/90 rounded-md "
+          >
+            Join Meeting
+          </button>
         </div>
       </div>
     </section>

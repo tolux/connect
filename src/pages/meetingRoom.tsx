@@ -6,14 +6,12 @@ import {
   UsersSvg,
   WindowSvg,
 } from '@/assets/icons';
-import MediaIcon from '@/components/layout/element/mediaIcon';
+import MediaIcon from '@/components/element/mediaIcon';
 
 export default function MeetingRoom() {
   return (
     <section className="h-full p-3 ">
       <div className=" bg-BLACK_0 h-full rounded-2xl flex items-start border-2 shadow-md p-3 border-GRAY_02">
-        <div className=" w-20 ">sid</div>
-
         <div className=" flex-1 relative h-full">
           <div className="inline-block">
             <div className="  border-2 px-5 py-1 border-GRAY_01 rounded-3xl flex items-center space-x-3">
@@ -39,7 +37,7 @@ export default function MeetingRoom() {
             <MediaIcon size="md" Icon={<CameraSvg className="w-4 h-4" />} />
             <MediaIcon
               size="lg"
-              className=" bg-RED_01"
+              className=" !bg-RED_01"
               Icon={<PhoneSvg className=" h-6 text-white rotate-[135deg]" />}
             />
             <MediaIcon size="md" Icon={<WindowSvg className="w-6 h-4" />} />

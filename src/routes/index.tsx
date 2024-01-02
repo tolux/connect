@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import { PageLayout } from '../components/layout';
-import WaitRoom from '../pages/waitRoom';
-import MeetingRoom from '@/pages/meetingRoom';
-import { MEET_ROOM_URL, WAIT_ROOM_URL } from '@/data';
+
+import { CONNECT_ROOM_URL } from '@/data';
+import ConnectPage from '@/pages/connectPage';
 
 export const router = createBrowserRouter([
   {
@@ -11,18 +11,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-
         element: <App />,
       },
       {
-        path: WAIT_ROOM_URL,
-
-        element: <WaitRoom />,
-      },
-      {
-        path: MEET_ROOM_URL,
-
-        element: <MeetingRoom />,
+        path: CONNECT_ROOM_URL,
+        element: <ConnectPage />,
       },
     ],
   },

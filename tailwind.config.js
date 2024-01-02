@@ -10,6 +10,7 @@ export default {
 
         GRAY_01: '#5c6065',
         GRAY_02: '#ececee',
+        GRAY_03: '#adb0b3',
 
         RED_01: '#fe5d5c',
       },
