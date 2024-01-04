@@ -8,7 +8,7 @@ import { AppContextApi, AppContextData } from '@/context';
 export default function ConnectPage() {
   const { param } = useRouting();
 
-  const { socket, userName } = useContext(AppContextData);
+  const { socket } = useContext(AppContextData);
   const { setAppData } = useContext(AppContextApi);
 
   function send() {
@@ -23,6 +23,8 @@ export default function ConnectPage() {
     }
 
     setAppData('userName', userId || dateNum);
+
+    return userId || dateNum;
   }
 
   function updateUserCount(userCount: number) {
@@ -30,12 +32,12 @@ export default function ConnectPage() {
   }
 
   useEffect(() => {
-    setUser();
+    const userId = setUser();
 
     socket.connect();
     socket.emit('joinRoom', {
       roomNum: 45,
-      userId: userName,
+      userId: userId,
     });
     socket.on('userCount', updateUserCount);
     return () => {

@@ -6,7 +6,7 @@ import {
   UsersSvg,
   WindowSvg,
 } from '@/assets/icons';
-import ChartSection from '@/components/chartSection';
+import ChartSection from '@/components/chat/chartSection';
 import MediaIcon from '@/components/element/mediaIcon';
 import { AppContextData } from '@/context';
 import { useContext, useEffect } from 'react';

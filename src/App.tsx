@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CONNECT_ROOM_URL } from './data';
-import { AppContextData } from './context';
-import { useContext } from 'react';
 
 function App() {
-  const { socket } = useContext(AppContextData);
   return (
     <main className="h-full">
       <div className=" flex justify-center items-center h-full">

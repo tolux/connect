@@ -29,7 +29,7 @@ const users = new Map();
 const messages = [];
 
 IO.on('connection', function connection(socket) {
-  socket.on('joinRoom', function joinRoom({ roomNum, userId }) {
+  socket.on('joinRoom', ({ roomNum, userId }) => {
     console.log(roomNum, userId);
     socket.join(roomNum);
     if (!users.has(userId)) {
@@ -37,13 +37,13 @@ IO.on('connection', function connection(socket) {
     }
     IO.to(roomNum).emit('userCount', users.size);
 
-    socket.on('onMessaging', function onMessaging(mess) {
+    socket.on('onMessaging', (mess) => {
       messages.push(mess);
-      console.log(mess);
-      // IO.to(roomNum).emit('sendMess', messages);
+      console.log('checking');
+      IO.to(roomNum).emit('sendMess', messages);
     });
 
-    socket.on('disconnect', function disconnect() {
+    socket.on('disconnect', () => {
       users.delete(userId);
       IO.to(roomNum).emit('userCount', users.size);
       socket.leave(roomNum);
