@@ -22,14 +22,28 @@ export type TAppProvider = {
   userName: string;
   socket: Socket;
   userCount: number;
-};
-export type TAppProviderApi = {
+  meetLink: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setAppData: (type: keyof TAppProvider, payload: any) => void;
 };
 
-export type TReducerAction = {
-  type: keyof TAppProvider;
+export type TMediaProvider = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  stream: any;
+};
+export type TInitialMediaState = {
+  IsAudio: boolean;
+  IsVideo: boolean;
+  stream: MediaStream;
+  isHost: boolean;
+  streamTrack: MediaStreamTrack[];
+};
+export type TAppProviderApi<T> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setAppData: (type: keyof T, payload: any) => void;
+};
+
+export type TReducerAction<T> = {
+  type: keyof T;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
 };

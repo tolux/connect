@@ -1,9 +1,16 @@
 import { TChatMessage } from '@/@types/app.types';
 import { ChatSvg, CloseSvg, SendSvg } from '@/assets/icons';
-import { AppContextData } from '@/context';
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import {
+  FormEvent,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import ChatBox from './chatbox';
+import { AppContextData } from '@/context/appProvider';
 
 export default function ChartSection() {
   const [showChat, setShowChat] = useState(false);
@@ -15,28 +22,34 @@ export default function ChartSection() {
   const chatInputRef = useRef<HTMLInputElement>(null);
   const chatBodyRef = useRef<HTMLDivElement>(null);
 
-  function sendMessage() {
+  function sendMessage(e: FormEvent) {
+    e.preventDefault();
+    if (message.trim() === '') return;
+
+    scrollToBottom();
     const messageBody = { message, byWho: userName };
     socket.emit('onMessaging', messageBody);
     setChatMessages([...chatMessages, messageBody]);
+    setMessage('');
   }
-  const scrollToLastFruit = () => {
-    chatBodyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  };
+
+  function scrollToBottom() {
+    chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+  }
 
   function toggleShowChat() {
-    // scrollToLastFruit();
-
-    // chatBodyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
     chatInputRef.current?.focus();
+    scrollToBottom();
     setShowChat(!showChat);
   }
 
+  useLayoutEffect(() => {
+    socket.on('sendAllMess', (message) => {
+      setChatMessages(message);
+    });
+  }, []);
+
   useEffect(() => {
-    if (showChat) {
-      scrollToLastFruit();
-    }
     socket.on('sendMess', (message) => {
       setChatMessages(message);
     });
@@ -50,7 +63,7 @@ export default function ChartSection() {
       <div
         className={` ${
           showChat ? 'right-8' : '-right-[30rem]'
-        } absolute w-[22rem] rounded-lg   shadow-lg h-[80%] bg-white bottom-14 z-20 transition-all  `}
+        } fixed w-[22rem] rounded-lg   shadow-lg h-[80%] bg-white bottom-14 z-20 transition-all  `}
       >
         <div
           ref={chatBodyRef}
@@ -66,19 +79,26 @@ export default function ChartSection() {
           ))}
         </div>
         <div className="absolute  left-1 bottom-1 right-1 z-[99] bg-white ">
-          <div className="flex space-x-3 items-center pe-3 border-2 rounded-md ">
+          <form
+            action=""
+            className="flex space-x-3 items-center pe-3 border-2 rounded-md"
+            onSubmit={sendMessage}
+          >
             <input
               ref={chatInputRef}
               type="text"
+              value={message}
               placeholder="message..."
               onChange={(e) => setMessage(e.target.value)}
               className=" inline-block w-full h-10 px-2 focus:outline-none "
             />
-            <SendSvg
-              onClick={sendMessage}
-              className=" w-4 rotate-90 text-BLUE_01 cursor-pointer"
-            />
-          </div>
+            <button className=" border-none" type="submit">
+              <SendSvg
+                onClick={sendMessage}
+                className=" w-4 rotate-90 text-BLUE_01 cursor-pointer"
+              />
+            </button>
+          </form>
         </div>
       </div>
       <div className="absolute bottom-4 right-4 z-10 ">

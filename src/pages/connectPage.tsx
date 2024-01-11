@@ -2,8 +2,7 @@ import { useContext, useEffect } from 'react';
 import MeetingRoom from './meetingRoom';
 import WaitRoom from './waitRoom';
 import { useRouting } from '@/hooks/routing';
-
-import { AppContextApi, AppContextData } from '@/context';
+import { AppContextApi, AppContextData } from '@/context/appProvider';
 
 export default function ConnectPage() {
   const { param } = useRouting();
@@ -11,9 +10,6 @@ export default function ConnectPage() {
   const { socket } = useContext(AppContextData);
   const { setAppData } = useContext(AppContextApi);
 
-  function send() {
-    socket.emit('onMessaging', { message: 'tolu' });
-  }
   function setUser() {
     const userId = localStorage.getItem('userId');
 
@@ -34,7 +30,6 @@ export default function ConnectPage() {
   useEffect(() => {
     const userId = setUser();
 
-    socket.connect();
     socket.emit('joinRoom', {
       roomNum: 45,
       userId: userId,
@@ -50,10 +45,5 @@ export default function ConnectPage() {
     meeting: <MeetingRoom />,
   }[param || 'wait'];
 
-  return (
-    <div className="h-full">
-      <button onClick={send}>send</button>
-      {display}
-    </div>
-  );
+  return <div className="h-full">{display}</div>;
 }

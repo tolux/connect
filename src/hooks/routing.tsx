@@ -6,8 +6,8 @@ export function useRouting() {
   const params = new URLSearchParams(location.search);
   const param = params.get('switch');
 
-  function switchUrl(url: string) {
-    navigate(`${location.pathname}?switch=${url}`);
+  function switchUrl(url: string, path: string = location.pathname) {
+    navigate(`${path}?switch=${url}`);
   }
 
   return {

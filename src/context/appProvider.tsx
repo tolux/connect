@@ -6,8 +6,12 @@ import {
 } from '@/@types/app.types';
 import { SOCKET_URL } from '@/data';
 
-import { createContext, useEffect, useMemo, useReducer } from 'react';
+import { createContext, useMemo, useReducer } from 'react';
 import { io } from 'socket.io-client';
+
+const initialApiState = {
+  setAppData: () => {},
+};
 
 const socketIo = io(SOCKET_URL, {
   transports: ['websocket'],
@@ -16,13 +20,12 @@ const initialDataState = {
   userName: '',
   socket: socketIo,
   userCount: 0,
+  meetLink: '',
 };
-
-const initialApiState = {
-  setAppData: () => {},
-};
-
-function reducer(state: TAppProvider, action: TReducerAction): TAppProvider {
+function reducer(
+  state: TAppProvider,
+  action: TReducerAction<TAppProvider>
+): TAppProvider {
   if (action.type) {
     return {
       ...state,
@@ -33,7 +36,8 @@ function reducer(state: TAppProvider, action: TReducerAction): TAppProvider {
 }
 
 export const AppContextData = createContext<TAppProvider>(initialDataState);
-export const AppContextApi = createContext<TAppProviderApi>(initialApiState);
+export const AppContextApi =
+  createContext<TAppProviderApi<TAppProvider>>(initialApiState);
 
 export const AppContext = createContext<TAppProvider>(initialDataState);
 
@@ -45,6 +49,7 @@ export function AppProvider({ children }: TChildrenProp) {
       userName: appState.userName,
       socket: socketIo,
       userCount: appState.userCount,
+      meetLink: appState.meetLink,
     };
   }, [appState]);
 

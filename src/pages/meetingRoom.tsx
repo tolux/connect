@@ -8,7 +8,7 @@ import {
 } from '@/assets/icons';
 import ChartSection from '@/components/chat/chartSection';
 import MediaIcon from '@/components/element/mediaIcon';
-import { AppContextData } from '@/context';
+import { AppContextData } from '@/context/appProvider';
 import { useContext, useEffect } from 'react';
 
 export default function MeetingRoom() {

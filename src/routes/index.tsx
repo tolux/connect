@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: CONNECT_ROOM_URL,
+        path: '/' + CONNECT_ROOM_URL,
         element: <ConnectPage />,
       },
     ],

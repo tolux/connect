@@ -8,7 +8,7 @@ export default function ChatBox({ isYou, userName, message }: TChatBox) {
       } flex items-start gap-2.5 mt-4 `}
     >
       <div
-        className={`  flex flex-col w-full max-w-[320px] relative leading-1.5 p-4 border-gray-200 bg-gray-100  rounded-e-xl`}
+        className={`flex flex-col w-full max-w-[320px] relative leading-1.5 py-2  px-3 border-gray-200 bg-white  rounded-xl`}
       >
         <div
           className={` ${
@@ -19,7 +19,9 @@ export default function ChatBox({ isYou, userName, message }: TChatBox) {
             {isYou ? 'you' : userName}
           </span>
         </div>
-        <p className="text-sm font-normal py-2.5 text-gray-900 ">{message}</p>
+        <p className="text-sm font-normal py-2 text-gray-900 text-wrap ">
+          {message}
+        </p>
       </div>
     </div>
   );
