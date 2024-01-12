@@ -21,6 +21,8 @@ const initialDataState = {
   socket: socketIo,
   userCount: 0,
   meetLink: '',
+  isLoadingMeeting: true,
+  meetingMessage: 'Processing...',
 };
 function reducer(
   state: TAppProvider,
@@ -50,6 +52,8 @@ export function AppProvider({ children }: TChildrenProp) {
       socket: socketIo,
       userCount: appState.userCount,
       meetLink: appState.meetLink,
+      isLoadingMeeting: appState.isLoadingMeeting,
+      meetingMessage: appState.meetingMessage,
     };
   }, [appState]);
 

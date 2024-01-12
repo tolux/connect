@@ -13,7 +13,7 @@ const initialApiState = {
 
 const initialState = {
   IsAudio: true,
-  IsVideo: true,
+  IsVideo: false,
   stream: {} as MediaStream,
   isHost: true,
   streamTrack: [],
@@ -46,31 +46,17 @@ export function MediaContextProvider({ children }: TChildrenProp) {
     });
   }
 
-  // async function init() {
-  //   try {
-  //     const stream = await streamData();
-
-  //     dispatch({ type: 'stream', payload: stream });
-
-  //     // handleSuccess(stream);
-  //   } catch (e) {
-  //     // handleError(e);
-  //     console.log(e);
-  //   }
-  // }
-
   async function startConnect(videoRef: RefObject<HTMLVideoElement>) {
     // console.log(state.stream, 'sterem from state');
     // await init();
     const stream = await streamData();
     dispatch({ type: 'stream', payload: stream });
-    const streamTrack = state.isHost
-      ? stream.getTracks()
-      : stream.getTracks()[0];
+    const streamTrack = stream?.getTracks()[0];
+    console.log(streamTrack);
     dispatch({ type: 'streamTrack', payload: streamTrack });
     const videoTracks = stream.getVideoTracks();
     // console.log(stream, 'Got stream with constraints:');
-    console.log(`Using video device: ${videoTracks[0].label}`);
+    // console.log(`Using video device: ${videoTracks[0].label}`);
     if (videoRef.current) {
       videoRef.current.srcObject = stream;
     }
@@ -87,7 +73,6 @@ export function MediaContextProvider({ children }: TChildrenProp) {
   }, []);
 
   const data = useMemo(() => {
-    console.log(state, 'Got stream with constraints:');
     return {
       IsAudio: state.IsAudio,
       IsVideo: state.IsVideo,

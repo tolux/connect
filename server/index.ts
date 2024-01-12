@@ -47,8 +47,16 @@ const messages: string[] = [];
 IO.on('connection', function connection(socket) {
   socket.on('createLink', () => {
     const link = createLink();
-    meetLink = link;
+    meetLink = 'link' + link;
     socket.emit('sendLink', meetLink);
+  });
+
+  socket.on('isValidLink', (link) => {
+    if (link == meetLink) {
+      socket.emit('linkStatus', 'ok');
+    } else {
+      socket.emit('linkStatus', 'error');
+    }
   });
 
   socket.on('joinRoom', ({ roomNum, userId }) => {

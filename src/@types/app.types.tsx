@@ -23,6 +23,8 @@ export type TAppProvider = {
   socket: Socket;
   userCount: number;
   meetLink: string;
+  isLoadingMeeting: boolean;
+  meetingMessage: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 };
 

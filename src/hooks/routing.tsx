@@ -6,6 +6,13 @@ export function useRouting() {
   const params = new URLSearchParams(location.search);
   const param = params.get('switch');
 
+  function getParamUrl(url: string) {
+    return params.get(url);
+  }
+
+  function goTo(path: string) {
+    navigate(path);
+  }
   function switchUrl(url: string, path: string = location.pathname) {
     navigate(`${path}?switch=${url}`);
   }
@@ -13,5 +20,7 @@ export function useRouting() {
   return {
     switchUrl,
     param,
+    getParamUrl,
+    goTo,
   };
 }

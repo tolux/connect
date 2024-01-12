@@ -1,5 +1,5 @@
 import { CONNECT_ROOM_URL } from './data';
-import { useContext, useLayoutEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContextApi, AppContextData } from './context/appProvider';
 import { CheckSvg, CopySvg } from './assets/icons';
 import { useRouting } from './hooks/routing';
@@ -31,12 +31,11 @@ function App() {
     }, 3000);
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     socket.connect();
     socket.on('sendLink', (link) => {
       setAppData('meetLink', link);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
