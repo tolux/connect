@@ -25,7 +25,9 @@ export default function MeetingRoom() {
   }
 
   function muted() {
-    streamTrack.ge;
+    streamTrack.getSettings();
+    console.log();
+    streamTrack.muted = true;
   }
   useLayoutEffect(() => {
     stopMeeting();
