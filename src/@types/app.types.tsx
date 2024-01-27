@@ -25,12 +25,10 @@ export type TAppProvider = {
   meetLink: string;
   isLoadingMeeting: boolean;
   meetingMessage: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 };
 
 export type TMediaProvider = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stream: any;
+  stream: MediaStream;
 };
 export type TInitialMediaState = {
   isAudio: boolean;
@@ -39,19 +37,16 @@ export type TInitialMediaState = {
   isHost: boolean;
 };
 export type TAppProviderApi<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setAppFn: (type: keyof T, payload: any) => void;
+  setAppFn: (type: keyof T, payload: T[keyof T]) => void;
 };
 export type TMediaProviderApi<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setMediaFn: (type: keyof T, payload: any) => void;
+  setMediaFn: (type: keyof T, payload: T[keyof T]) => void;
   startConnect: (videoRef: RefObject<HTMLVideoElement>) => void;
 };
 
 export type TReducerAction<T> = {
   type: keyof T;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: any;
+  payload?: T[keyof T];
 };
 
 export type TChatMessage = { message: string; byWho: string };

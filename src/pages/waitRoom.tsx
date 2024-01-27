@@ -6,27 +6,16 @@ import avatar4 from '../assets/testimg/avatar4.png';
 import avatar5 from '../assets/testimg/avatar5.png';
 import { AudioSvg, CameraSvg } from '@/assets/icons';
 import IconBtn from '@/components/element/iconBtn';
-
-import { useRouting } from '@/hooks/routing';
 import { useContext, useRef } from 'react';
 import { MediaContextApi, MediaContextData } from '@/context/mediaContext';
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 
 export default function WaitRoom() {
-  const { switchUrl } = useRouting();
   const { userCount } = useContext(AppContextData);
   const { startConnect, setMediaFn } = useContext(MediaContextApi);
-  const { stream, isVideo } = useContext(MediaContextData);
+  const { isVideo } = useContext(MediaContextData);
   const videoRef = useRef<HTMLVideoElement>(null);
-  // () => switchUrl('meeting')
-
-  function stopMeeting() {
-    const tract = stream.getTracks()[0];
-    // tract.stop();
-    tract.enabled = false;
-    console.log(tract);
-  }
 
   return (
     <section className=" bg-">

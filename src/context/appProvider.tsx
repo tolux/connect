@@ -59,9 +59,10 @@ export function AppProvider({ children }: TChildrenProp) {
 
   const api = useMemo(() => {
     return {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setAppFn: (type: keyof TAppProvider, payload: any) =>
-        dispatch({ type, payload }),
+      setAppFn: (
+        type: keyof TAppProvider,
+        payload: TAppProvider[keyof TAppProvider]
+      ) => dispatch({ type, payload }),
     };
   }, []);
 

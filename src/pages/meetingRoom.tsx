@@ -9,10 +9,9 @@ import {
 import ChartSection from '@/components/chat/chartSection';
 import MediaIcon from '@/components/element/mediaIcon';
 import MeetingSpinner from '@/components/layout/meetingSpinner';
-import { AppContextApi, AppContextData } from '@/context/appProvider';
+import { AppContextData } from '@/context/appProvider';
 import { MediaContextApi, MediaContextData } from '@/context/mediaContext';
-import { useRouting } from '@/hooks/routing';
-import { useContext, useEffect, useLayoutEffect, useRef } from 'react';
+import { useContext, useLayoutEffect, useRef } from 'react';
 
 export default function MeetingRoom() {
   const { userCount } = useContext(AppContextData);
@@ -33,6 +32,7 @@ export default function MeetingRoom() {
     video.enabled = !isVideo;
     setMediaFn('isVideo', !isVideo);
   }
+
   useLayoutEffect(() => {
     connect();
   }, []);

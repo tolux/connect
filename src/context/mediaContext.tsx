@@ -73,9 +73,10 @@ export function MediaContextProvider({ children }: TChildrenProp) {
 
   const api = useMemo(() => {
     return {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setMediaFn: (type: keyof TInitialMediaState, payload: any) =>
-        dispatch({ type, payload }),
+      setMediaFn: (
+        type: keyof TInitialMediaState,
+        payload: TInitialMediaState[keyof TInitialMediaState]
+      ) => dispatch({ type, payload }),
       startConnect: startConnect,
     };
   }, []);
