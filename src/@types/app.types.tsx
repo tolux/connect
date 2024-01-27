@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, RefObject } from 'react';
 import { Socket } from 'socket.io-client';
 
 export type TChildrenProp = {
@@ -33,15 +33,19 @@ export type TMediaProvider = {
   stream: any;
 };
 export type TInitialMediaState = {
-  IsAudio: boolean;
-  IsVideo: boolean;
+  isAudio: boolean;
+  isVideo: boolean;
   stream: MediaStream;
   isHost: boolean;
-  streamTrack: MediaStreamTrack[];
 };
 export type TAppProviderApi<T> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setAppData: (type: keyof T, payload: any) => void;
+  setAppFn: (type: keyof T, payload: any) => void;
+};
+export type TMediaProviderApi<T> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setMediaFn: (type: keyof T, payload: any) => void;
+  startConnect: (videoRef: RefObject<HTMLVideoElement>) => void;
 };
 
 export type TReducerAction<T> = {

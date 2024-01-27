@@ -10,7 +10,7 @@ import { createContext, useMemo, useReducer } from 'react';
 import { io } from 'socket.io-client';
 
 const initialApiState = {
-  setAppData: () => {},
+  setAppFn: () => {},
 };
 
 const socketIo = io(SOCKET_URL, {
@@ -60,7 +60,7 @@ export function AppProvider({ children }: TChildrenProp) {
   const api = useMemo(() => {
     return {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setAppData: (type: keyof TAppProvider, payload: any) =>
+      setAppFn: (type: keyof TAppProvider, payload: any) =>
         dispatch({ type, payload }),
     };
   }, []);

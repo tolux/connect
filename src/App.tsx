@@ -7,7 +7,7 @@ import { useRouting } from './hooks/routing';
 const meetingPageLink = `${window.location}${CONNECT_ROOM_URL}?switch=meeting&link=`;
 function App() {
   const { socket, meetLink } = useContext(AppContextData);
-  const { setAppData } = useContext(AppContextApi);
+  const { setAppFn } = useContext(AppContextApi);
   const [isCopy, setIsCopy] = useState(false);
   const [isLink, setIsLink] = useState(false);
   const { switchUrl } = useRouting();
@@ -34,7 +34,7 @@ function App() {
   useEffect(() => {
     socket.connect();
     socket.on('sendLink', (link) => {
-      setAppData('meetLink', link);
+      setAppFn('meetLink', link);
     });
   }, []);
 

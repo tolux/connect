@@ -8,7 +8,7 @@ export default function ConnectPage() {
   const { param, goTo, getParamUrl } = useRouting();
 
   const { socket } = useContext(AppContextData);
-  const { setAppData } = useContext(AppContextApi);
+  const { setAppFn } = useContext(AppContextApi);
 
   function setUser() {
     const userId = localStorage.getItem('userId');
@@ -16,12 +16,12 @@ export default function ConnectPage() {
     if (!userId) {
       localStorage.setItem('userId', dateNum);
     }
-    setAppData('userName', userId || dateNum);
+    setAppFn('userName', userId || dateNum);
     return userId || dateNum;
   }
 
   function updateUserCount(userCount: number) {
-    setAppData('userCount', userCount);
+    setAppFn('userCount', userCount);
   }
 
   function returnToHomePage() {
@@ -42,11 +42,12 @@ export default function ConnectPage() {
     socket.emit('isValidLink', link);
     socket.on('linkStatus', (status: string) => {
       if (status == 'ok') {
-        setAppData('isLoadingMeeting', false);
+        // setAppFn('isLoadingMeeting', false);
+        setAppFn('meetingMessage', 'Setting up your devices');
         joinRoom(link);
       } else {
         returnToHomePage();
-        setAppData('meetingMessage', 'Invalid link');
+        setAppFn('meetingMessage', 'Invalid link');
       }
     });
   }

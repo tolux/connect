@@ -1,22 +1,28 @@
 import {
-  TAppProviderApi,
   TChildrenProp,
   TInitialMediaState,
+  TMediaProviderApi,
   TReducerAction,
 } from '@/@types/app.types';
-import { RefObject, createContext, useMemo, useReducer } from 'react';
+import {
+  RefObject,
+  createContext,
+  useContext,
+  useMemo,
+  useReducer,
+} from 'react';
+import { AppContextApi } from './appProvider';
 
 const initialApiState = {
-  setAppData: () => {},
+  setMediaFn: () => {},
   startConnect: () => {},
 };
 
 const initialState = {
-  IsAudio: true,
-  IsVideo: false,
+  isAudio: false,
+  isVideo: false,
   stream: {} as MediaStream,
   isHost: true,
-  streamTrack: [],
 };
 
 function reducer(
@@ -34,51 +40,52 @@ function reducer(
 
 export const MediaContextData = createContext<TInitialMediaState>(initialState);
 export const MediaContextApi =
-  createContext<TAppProviderApi<TInitialMediaState>>(initialApiState);
+  createContext<TMediaProviderApi<TInitialMediaState>>(initialApiState);
 
 export function MediaContextProvider({ children }: TChildrenProp) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { setAppFn } = useContext(AppContextApi);
 
   async function streamData(): Promise<MediaStream> {
+    setAppFn('isLoadingMeeting', true);
     return await navigator.mediaDevices.getUserMedia({
-      audio: state.IsAudio,
-      video: state.IsVideo,
+      audio: true,
+      video: true,
     });
   }
 
+  function muteVideoAndAudio(stream: MediaStream) {
+    const [audioTrack, videoTrack] = stream.getTracks();
+    audioTrack.enabled = false;
+    videoTrack.enabled = false;
+    setAppFn('isLoadingMeeting', false);
+  }
+
   async function startConnect(videoRef: RefObject<HTMLVideoElement>) {
-    // console.log(state.stream, 'sterem from state');
-    // await init();
+    // remember to check for permission first
     const stream = await streamData();
     dispatch({ type: 'stream', payload: stream });
-    const streamTrack = stream?.getTracks()[0];
-    console.log(streamTrack);
-    dispatch({ type: 'streamTrack', payload: streamTrack });
-    const videoTracks = stream.getVideoTracks();
-    // console.log(stream, 'Got stream with constraints:');
-    // console.log(`Using video device: ${videoTracks[0].label}`);
     if (videoRef.current) {
       videoRef.current.srcObject = stream;
+      muteVideoAndAudio(stream);
     }
   }
 
   const api = useMemo(() => {
     return {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setAppData: (type: keyof TInitialMediaState, payload: any) =>
+      setMediaFn: (type: keyof TInitialMediaState, payload: any) =>
         dispatch({ type, payload }),
-
       startConnect: startConnect,
     };
   }, []);
 
   const data = useMemo(() => {
     return {
-      IsAudio: state.IsAudio,
-      IsVideo: state.IsVideo,
+      isAudio: state.isAudio,
+      isVideo: state.isVideo,
       stream: state.stream,
       isHost: state.isHost,
-      streamTrack: state.streamTrack,
     };
   }, [state]);
 

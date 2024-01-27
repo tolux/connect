@@ -16,8 +16,8 @@ const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
 export default function WaitRoom() {
   const { switchUrl } = useRouting();
   const { userCount } = useContext(AppContextData);
-  const { startConnect, setAppData } = useContext(MediaContextApi);
-  const { stream, IsVideo } = useContext(MediaContextData);
+  const { startConnect, setMediaFn } = useContext(MediaContextApi);
+  const { stream, isVideo } = useContext(MediaContextData);
   const videoRef = useRef<HTMLVideoElement>(null);
   // () => switchUrl('meeting')
 
@@ -55,7 +55,7 @@ export default function WaitRoom() {
         <div className=" justify-center flex mt-6 space-x-8">
           <IconBtn Icon={<AudioSvg className=" w-8" />} state />
 
-          <span onClick={() => setAppData('IsVideo', !IsVideo)}>
+          <span onClick={() => setMediaFn('isVideo', !isVideo)}>
             <IconBtn Icon={<CameraSvg className=" w-8" />} />
           </span>
         </div>

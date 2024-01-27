@@ -1,7 +1,11 @@
 import { AppContextData } from '@/context/appProvider';
 import { useContext } from 'react';
 
-const messageType = ['Processing...', 'reconnecting...'];
+const messageType = [
+  'Processing...',
+  'reconnecting...',
+  'Setting up your devices',
+];
 
 export default function MeetingSpinner() {
   const { isLoadingMeeting, meetingMessage } = useContext(AppContextData);

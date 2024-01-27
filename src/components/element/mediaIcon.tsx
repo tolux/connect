@@ -17,7 +17,7 @@ export default function MediaIcon({
   }
   return (
     <span
-      className={` inline-block ${sizeType()} ${className}  cursor-pointer  rounded-xl bg-black/30 text-white `}
+      className={` inline-block ${sizeType()} ${className}  cursor-pointer  rounded-xl bg-black/30 text-white relative`}
     >
       {Icon}
       {state && (

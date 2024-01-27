@@ -16,22 +16,25 @@ import { useContext, useEffect, useLayoutEffect, useRef } from 'react';
 
 export default function MeetingRoom() {
   const { userCount } = useContext(AppContextData);
-  const { stream, IsVideo, streamTrack } = useContext(MediaContextData);
-  const { startConnect, setAppData } = useContext(MediaContextApi);
+  const { stream, isVideo, isAudio } = useContext(MediaContextData);
+  const { startConnect, setMediaFn } = useContext(MediaContextApi);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  function stopMeeting() {
+  function connect() {
     startConnect(videoRef);
   }
-
-  function muted() {
-    streamTrack.getSettings();
-    console.log();
-    streamTrack.muted = true;
+  function toggleMute() {
+    const [audio] = stream.getAudioTracks();
+    audio.enabled = !isAudio;
+    setMediaFn('isAudio', !isAudio);
+  }
+  function toggleVideo() {
+    const [video] = stream.getVideoTracks();
+    video.enabled = !isVideo;
+    setMediaFn('isVideo', !isVideo);
   }
   useLayoutEffect(() => {
-    stopMeeting();
-    console.log(streamTrack);
+    connect();
   }, []);
 
   return (
@@ -48,30 +51,36 @@ export default function MeetingRoom() {
             </div>
             <div className="mt-8 ">
               <div className=" grid grid-cols-4 space-x-3  ">
-                <div className=" rounded-3xl border-2  w-full h-[13rem]  relative">
+                <div className=" rounded-3xl border-2  w-full h-[15rem]  relative">
+                  <video
+                    className="  w-full h-full object-fill "
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                  ></video>
                   <span className=" px-2 py-1 rounded-xl bg-black/30 text-white absolute bottom-2 right-2">
                     Tolu
                   </span>
 
-                  <span
-                    onClick={() => muted()}
-                    className="absolute top-2 right-2"
-                  >
-                    <MediaIcon Icon={<AudioSvg className="w-4" />} />
+                  <span onClick={toggleMute} className="absolute top-2 right-2">
+                    <MediaIcon
+                      state={!isAudio}
+                      Icon={<AudioSvg className="w-4" />}
+                    />
                   </span>
                 </div>
               </div>
             </div>
 
-            <video
-              className=" h-auto w-full"
-              ref={videoRef}
-              autoPlay
-              playsInline
-            ></video>
             <div className="absolute w-full flex justify-center bottom-2 space-x-4 items-center">
               <MediaIcon size="md" Icon={<AudioSvg className="w-4" />} />
-              <MediaIcon size="md" Icon={<CameraSvg className="w-4 h-4" />} />
+              <span onClick={toggleVideo}>
+                <MediaIcon
+                  size="md"
+                  state={!isVideo}
+                  Icon={<CameraSvg className="w-4 h-4" />}
+                />
+              </span>
               <MediaIcon
                 size="lg"
                 className=" !bg-RED_01"
